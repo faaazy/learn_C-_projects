@@ -1,0 +1,25 @@
+@plzwork_HostAddress = http://localhost:5085
+
+GET {{plzwork_HostAddress}}/tasks
+Accept: application/json
+
+###
+
+POST {{plzwork_HostAddress}}/tasks
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "vlad",
+    "dueDate": "2026-07-08",
+    "isCompleted": false
+}
+
+
+### 
+
+GET {{plzwork_HostAddress}}/tasks/1
+
+###
+
+DELETE {{plzwork_HostAddress}}/tasks/1
