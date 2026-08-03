@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\code\\Csharp\\start\\start.csproj",
+      "projectUniqueName": "d:\\code\\Csharp\\plzwork\\start.csproj",
       "projectName": "start",
-      "projectPath": "D:\\code\\Csharp\\start\\start.csproj",
+      "projectPath": "d:\\code\\Csharp\\plzwork\\start.csproj",
       "packagesPath": "C:\\Users\\mikry\\.nuget\\packages\\",
-      "outputPath": "D:\\code\\Csharp\\start\\obj\\",
+      "outputPath": "d:\\code\\Csharp\\plzwork\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mikry\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -67,7 +67,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
