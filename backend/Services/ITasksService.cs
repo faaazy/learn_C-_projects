@@ -4,11 +4,11 @@ using plzwork.Models;
 
 public interface ITasksService
 {
-    List<Todo> GetTasks();
+    Task<List<Todo>> GetTasksAsync();
 
-    Todo AddTask(Todo Task);
+    Task<Todo> AddTaskAsync(Todo Task);
 
-    Todo? GetTaskById(int id);
+    Task<Todo?> GetTaskByIdAsync(int id);
 
-    void DeleteTaskById(int id);
+    Task DeleteTaskByIdAsync(int id);
 };

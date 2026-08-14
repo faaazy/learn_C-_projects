@@ -6,39 +6,35 @@ using plzwork.Services;
 
 [ApiController]
 [Route("tasks")]
-public class TasksController : ControllerBase
+public class TasksController(ITasksService tasksService) : ControllerBase
 {
-    private readonly ITasksService _tasksService;
-
-    public TasksController(ITasksService tasksService)
-    {
-        _tasksService = tasksService;
-    }
+    private readonly ITasksService _tasksService = tasksService;
 
     [HttpGet]
-    public ActionResult<List<Todo>> GetAll()
+    public async Task<ActionResult<List<Todo>>> GetAll()
     {
-        return Ok(_tasksService.GetTasks());
+        var tasks = await _tasksService.GetTasksAsync();
+        return Ok(tasks);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Todo> GetById(int id)
+    public async Task<ActionResult<Todo>> GetById(int id)
     {
-        var task = _tasksService.GetTaskById(id);
+        var task = await _tasksService.GetTaskByIdAsync(id);
         return task is null ? NotFound() : Ok(task);
     }
 
     [HttpPost]
-    public ActionResult<Todo> Create(Todo task)
+    public async Task<ActionResult<Todo>> Create(Todo task)
     {
-        var createdTask = _tasksService.AddTask(task);
+        var createdTask = await _tasksService.AddTaskAsync(task);
         return Created($"/tasks/{createdTask.Id}", createdTask);
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        _tasksService.DeleteTaskById(id);
+        await _tasksService.DeleteTaskByIdAsync(id);
         return NoContent();
     }
 

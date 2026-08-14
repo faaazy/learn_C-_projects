@@ -1,31 +1,35 @@
 namespace plzwork.Services;
 
+using Microsoft.EntityFrameworkCore;
+using plzwork.Data;
 using plzwork.Models;
 
-public class TasksService : ITasksService
+public class TasksService(AppDbContext context) : ITasksService
 {
-  private readonly List<Todo> _tasks = [];
-  private int _nextId = 1;
-
-  public List<Todo> GetTasks()
+    public async Task<List<Todo>> GetTasksAsync()
     {
-        return _tasks;
+        return await context.Todos.ToListAsync();
     }
 
-    public Todo AddTask(Todo task)
+    public async Task<Todo> AddTaskAsync(Todo task)
     {
-        var newTask = task with {Id = _nextId++};
-        _tasks.Add(newTask);
-        return newTask;
+        context.Todos.Add(task);
+        await context.SaveChangesAsync();
+        return task;
     }
 
-    public Todo? GetTaskById(int id)
+    public async Task<Todo?> GetTaskByIdAsync(int id)
     {
-        return _tasks.SingleOrDefault(task => task.Id == id);
+        return await context.Todos.SingleOrDefaultAsync(task => task.Id == id);
     }
 
-    public void DeleteTaskById(int id)
+    public async Task DeleteTaskByIdAsync(int id)
     {
-        _tasks.RemoveAll(task => task.Id == id);
+        var taskById = await context.Todos.SingleOrDefaultAsync(task => task.Id == id);
+        if(taskById is not null)
+        {
+            context.Todos.Remove(taskById);
+            await context.SaveChangesAsync();
+        }
     }
 };
