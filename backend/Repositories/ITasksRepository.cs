@@ -1,8 +1,8 @@
-namespace plzwork.Services;
+namespace plzwork.Repositories;
 
 using plzwork.Models;
 
-public interface ITasksService
+public interface ITasksRepository
 {
     Task<List<Todo>> GetTasksAsync();
 

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using plzwork.Data;
+using plzwork.Repositories;
 using plzwork.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.AddScoped<ITasksService, TasksService>();
+builder.Services.AddScoped<ITasksRepository, TasksRepository>();
 
 builder.Services.AddControllers();
 
