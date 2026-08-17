@@ -1,27 +1,38 @@
 namespace plzwork.Services;
 
 using plzwork.Models;
+using plzwork.Models.Dtos;
 using plzwork.Repositories;
 
 public class TasksService(ITasksRepository repository) : ITasksService
 {
-    public async Task<List<Todo>> GetTasksAsync()
+    public async Task<List<TodoDto>> GetTasksAsync()
     {
-        return await repository.GetTasksAsync();
+        var tasks = await repository.GetTasksAsync();
+
+        return tasks.Select(task => ToDto(task)).ToList();
     }
 
-    public async Task<Todo> AddTaskAsync(Todo task)
+    public async Task<TodoDto> AddTaskAsync(CreateTodoDto taskDto)
     {
-        return await repository.AddTaskAsync(task);
+        var task = new Todo(0, taskDto.Name, taskDto.DueDate, taskDto.IsCompleted);
+        var created = await repository.AddTaskAsync(task);
+        return ToDto(created);
     }
 
-    public async Task<Todo?> GetTaskByIdAsync(int id)
+    public async Task<TodoDto?> GetTaskByIdAsync(int id)
     {
-        return await repository.GetTaskByIdAsync(id);
+        var task = await repository.GetTaskByIdAsync(id);
+
+        return task is null ? null : ToDto(task);
+
     }
 
     public async Task DeleteTaskByIdAsync(int id)
     {
         await repository.DeleteTaskByIdAsync(id);
     }
+
+    private static TodoDto ToDto(Todo task) => 
+    new(task.Id, task.Name, task.DueDate, task.IsCompleted);
 };

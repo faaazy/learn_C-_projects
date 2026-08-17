@@ -1,14 +1,14 @@
 namespace plzwork.Services;
 
-using plzwork.Models;
+using plzwork.Models.Dtos;
 
 public interface ITasksService
 {
-    Task<List<Todo>> GetTasksAsync();
+    Task<List<TodoDto>> GetTasksAsync();
 
-    Task<Todo> AddTaskAsync(Todo task);
+    Task<TodoDto> AddTaskAsync(CreateTodoDto task);
 
-    Task<Todo?> GetTaskByIdAsync(int id);
+    Task<TodoDto?> GetTaskByIdAsync(int id);
 
     Task DeleteTaskByIdAsync(int id);
 };
