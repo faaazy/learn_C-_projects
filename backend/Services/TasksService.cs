@@ -15,7 +15,7 @@ public class TasksService(ITasksRepository repository) : ITasksService
 
     public async Task<TodoDto> AddTaskAsync(CreateTodoDto taskDto)
     {
-        var task = new Todo(0, taskDto.Name, taskDto.DueDate, taskDto.IsCompleted);
+        var task = new Todo(0, taskDto.Name, taskDto.DueDate, false);
         var created = await repository.AddTaskAsync(task);
         return ToDto(created);
     }
