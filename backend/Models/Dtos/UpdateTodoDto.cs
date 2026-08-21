@@ -2,11 +2,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace plzwork.Models.Dtos;
 
-public record CreateTodoDto(
+public record UpdateTodoDto(
     [Required]
     [StringLength(100, MinimumLength = 3)]
     string Name, 
 
     [Required]
-    DateTime? DueDate
-);
+    DateTime? DueDate,
+    
+    bool IsCompleted
+    );

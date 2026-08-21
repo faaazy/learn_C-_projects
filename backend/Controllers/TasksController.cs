@@ -38,4 +38,11 @@ public class TasksController(ITasksService tasksService) : ControllerBase
         return NoContent();
     }
 
+    [HttpPut("{id}")]
+    public async Task<ActionResult<TodoDto>> Update(int id, UpdateTodoDto taskDto)
+    {
+        var task = await _tasksService.UpdateTaskAsync(id, taskDto);
+
+        return task is null ? NotFound() : Ok(task);
+    }
 }

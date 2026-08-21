@@ -34,4 +34,10 @@ public class TasksRepository(AppDbContext context) : ITasksRepository
         }
     }
 
+    public async Task UpdateTaskAsync(Todo task)
+    {
+        context.Todos.Update(task);
+        await context.SaveChangesAsync();
+    }
+
 }

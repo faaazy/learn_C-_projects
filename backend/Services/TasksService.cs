@@ -15,7 +15,12 @@ public class TasksService(ITasksRepository repository) : ITasksService
 
     public async Task<TodoDto> AddTaskAsync(CreateTodoDto taskDto)
     {
-        var task = new Todo(0, taskDto.Name, taskDto.DueDate, false);
+        var task = new Todo{
+            Name = taskDto.Name, 
+            DueDate = taskDto.DueDate.Value, 
+            IsCompleted = false
+        };
+
         var created = await repository.AddTaskAsync(task);
         return ToDto(created);
     }
@@ -31,6 +36,23 @@ public class TasksService(ITasksRepository repository) : ITasksService
     public async Task DeleteTaskByIdAsync(int id)
     {
         await repository.DeleteTaskByIdAsync(id);
+    }
+
+    public async Task<TodoDto?> UpdateTaskAsync(int id, UpdateTodoDto taskDto)
+    {
+        var task = await repository.GetTaskByIdAsync(id);
+        if(task is null)
+        {
+            return null;
+        } 
+
+        task.Name = taskDto.Name;
+        task.DueDate = taskDto.DueDate.Value;
+        task.IsCompleted = taskDto.IsCompleted;
+
+        await repository.UpdateTaskAsync(task);
+
+        return ToDto(task);
     }
 
     private static TodoDto ToDto(Todo task) => 

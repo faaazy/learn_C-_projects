@@ -18,8 +18,19 @@ Content-Type: application/json
 
 ### 
 
-GET {{plzwork_HostAddress}}/tasks/1
+GET {{plzwork_HostAddress}}/tasks/2
 
 ###
 
 DELETE {{plzwork_HostAddress}}/tasks/1
+
+###
+
+PUT {{plzwork_HostAddress}}/tasks/2
+Content-Type: application/json
+
+{
+  "name": "Updated task",
+  "dueDate": "2026-08-25T12:00:00Z",
+  "isCompleted": true
+}
