@@ -10,7 +10,7 @@ public interface ITasksService
 
     Task<TodoDto?> GetTaskByIdAsync(int id);
 
-    Task DeleteTaskByIdAsync(int id);
+    Task<bool> DeleteTaskByIdAsync(int id);
 
     Task<TodoDto?> UpdateTaskAsync(int id, UpdateTodoDto taskDto);
 };

@@ -8,7 +8,9 @@ public class TasksRepository(AppDbContext context) : ITasksRepository
 {
     public async Task<List<Todo>> GetTasksAsync()
     {
-        return await context.Todos.ToListAsync();
+        return await context.Todos
+        .AsNoTracking()
+        .ToListAsync();
     }
 
     public async Task<Todo> AddTaskAsync(Todo task)
@@ -23,7 +25,7 @@ public class TasksRepository(AppDbContext context) : ITasksRepository
         return await context.Todos.SingleOrDefaultAsync(task => task.Id == id);
     }
 
-    public async Task DeleteTaskByIdAsync(int id)
+    public async Task<bool> DeleteTaskByIdAsync(int id)
     {
         var taskById = await context.Todos.SingleOrDefaultAsync(task => task.Id == id);
         
@@ -31,12 +33,15 @@ public class TasksRepository(AppDbContext context) : ITasksRepository
         {
             context.Todos.Remove(taskById);
             await context.SaveChangesAsync();
+            return true;
+        } else
+        {
+            return false;
         }
     }
 
     public async Task UpdateTaskAsync(Todo task)
     {
-        context.Todos.Update(task);
         await context.SaveChangesAsync();
     }
 

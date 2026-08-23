@@ -33,9 +33,12 @@ public class TasksService(ITasksRepository repository) : ITasksService
 
     }
 
-    public async Task DeleteTaskByIdAsync(int id)
+    public async Task<bool> DeleteTaskByIdAsync(int id)
     {
-        await repository.DeleteTaskByIdAsync(id);
+
+        var isDeleted = await repository.DeleteTaskByIdAsync(id);
+        
+        return isDeleted;
     }
 
     public async Task<TodoDto?> UpdateTaskAsync(int id, UpdateTodoDto taskDto)
