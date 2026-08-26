@@ -44,6 +44,19 @@ public class TasksController(ITasksService tasksService) : ControllerBase
     {
         var task = await _tasksService.UpdateTaskAsync(id, taskDto);
 
-        return task is null ? NotFound() : Ok(task);
+        switch (task.Status)
+        {
+            case UpdateTaskStatus.Success: 
+                return Ok(task.Todo);
+            
+            case UpdateTaskStatus.AlreadyCompleted:
+                return Conflict("This task is already completed");
+
+            case UpdateTaskStatus.NotFound:
+                return NotFound();
+
+            default: 
+                return BadRequest();
+        };
     }
 }

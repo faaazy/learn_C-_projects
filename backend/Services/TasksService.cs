@@ -35,19 +35,20 @@ public class TasksService(ITasksRepository repository) : ITasksService
 
     public async Task<bool> DeleteTaskByIdAsync(int id)
     {
-
         var isDeleted = await repository.DeleteTaskByIdAsync(id);
         
         return isDeleted;
     }
 
-    public async Task<TodoDto?> UpdateTaskAsync(int id, UpdateTodoDto taskDto)
+    public async Task<UpdateTaskResult> UpdateTaskAsync(int id, UpdateTodoDto taskDto)
     {
         var task = await repository.GetTaskByIdAsync(id);
-        if(task is null)
-        {
-            return null;
-        } 
+
+        if (task is null) 
+        return new UpdateTaskResult(UpdateTaskStatus.NotFound, null);
+
+        if (task.IsCompleted) 
+        return new UpdateTaskResult(UpdateTaskStatus.AlreadyCompleted, null);
 
         task.Name = taskDto.Name;
         task.DueDate = taskDto.DueDate.Value;
@@ -55,7 +56,7 @@ public class TasksService(ITasksRepository repository) : ITasksService
 
         await repository.UpdateTaskAsync(task);
 
-        return ToDto(task);
+        return new UpdateTaskResult(UpdateTaskStatus.Success, ToDto(task));
     }
 
     private static TodoDto ToDto(Todo task) => 
