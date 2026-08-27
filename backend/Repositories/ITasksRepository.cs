@@ -12,5 +12,5 @@ public interface ITasksRepository
 
     Task<bool> DeleteTaskByIdAsync(int id);
 
-    Task UpdateTaskAsync(Todo task);
+    Task SaveChangesAsync();
 };

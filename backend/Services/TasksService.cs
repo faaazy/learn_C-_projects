@@ -54,7 +54,7 @@ public class TasksService(ITasksRepository repository) : ITasksService
         task.DueDate = taskDto.DueDate.Value;
         task.IsCompleted = taskDto.IsCompleted;
 
-        await repository.UpdateTaskAsync(task);
+        await repository.SaveChangesAsync();
 
         return new UpdateTaskResult(UpdateTaskStatus.Success, ToDto(task));
     }
