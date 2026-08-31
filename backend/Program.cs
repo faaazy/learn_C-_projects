@@ -16,6 +16,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<ITasksService, TasksService>();
 builder.Services.AddScoped<ITasksRepository, TasksRepository>();
 
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+
 builder.Services.AddControllers();
 
 builder.Services.AddCors(options =>

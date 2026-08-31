@@ -34,3 +34,13 @@ Content-Type: application/json
   "dueDate": "2026-08-25T12:00:00Z",
   "isCompleted": true
 }
+
+###
+
+POST {{plzwork_HostAddress}}/auth/register
+Content-Type: application/json
+
+{
+    "username": "testuser",
+    "password": "password123"
+}
