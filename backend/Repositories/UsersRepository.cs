@@ -18,4 +18,8 @@ public class UsersRepository(AppDbContext context) : IUsersRepository
         await context.SaveChangesAsync();
     }
 
+    public async Task<User?> GetUserAsync(string username)
+    {
+        return await context.Users.SingleOrDefaultAsync(u => u.Username == username);
+    }
 }

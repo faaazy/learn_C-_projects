@@ -2,8 +2,9 @@
 
 GET {{plzwork_HostAddress}}/tasks
 Accept: application/json
+Authorization: Bearer {{login.response.body.$.token}}
 
-###
+### CREATE NEW TASK
 
 POST {{plzwork_HostAddress}}/tasks
 Content-Type: application/json
@@ -16,15 +17,15 @@ Content-Type: application/json
 }
 
 
-### 
+### GET BY ID
 
 GET {{plzwork_HostAddress}}/tasks/2
 
-###
+### DELETE
 
 DELETE {{plzwork_HostAddress}}/tasks/1
 
-###
+### UPDATE
 
 PUT {{plzwork_HostAddress}}/tasks/2
 Content-Type: application/json
@@ -35,9 +36,20 @@ Content-Type: application/json
   "isCompleted": true
 }
 
-###
+### REGISTER
 
 POST {{plzwork_HostAddress}}/auth/register
+Content-Type: application/json
+
+{
+    "username": "testuser",
+    "password": "password123"
+}
+
+### LOGIN
+
+# @name login
+POST {{plzwork_HostAddress}}/auth/login
 Content-Type: application/json
 
 {

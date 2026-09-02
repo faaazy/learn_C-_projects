@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using plzwork.Models.Dtos;
 using plzwork.Services;
@@ -21,6 +22,24 @@ public class AuthController(IAuthService authService) : ControllerBase
             case RegisterUserStatus.Success:
                 return Ok("User registered successfully");
             
+            default:
+                return BadRequest();
+        }
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginDto loginDto)
+    {
+        var loginResult = await authService.LoginUserAsync(loginDto);
+
+        switch (loginResult.Status)
+        {
+            case LoginUserStatus.InvalidCredentials:
+                return Unauthorized();
+
+            case LoginUserStatus.Success:
+                return Ok(new {token = loginResult.JWT});
+                        
             default:
                 return BadRequest();
         }

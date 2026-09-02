@@ -1,4 +1,7 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using plzwork.Data;
 using plzwork.Repositories;
 using plzwork.Services;
@@ -19,6 +22,32 @@ builder.Services.AddScoped<ITasksRepository, TasksRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var jwtSecret = builder.Configuration["Jwt:Secret"];
+        var jwtIssuer = builder.Configuration["Jwt:Issuer"];
+        var jwtAudience = builder.Configuration["Jwt:Audience"];
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret!));
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = jwtIssuer,
+            
+            ValidateAudience = true,
+            ValidAudience = jwtAudience,
+
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = key,
+
+            ValidateLifetime = true
+        };
+    });
+
+
 builder.Services.AddControllers();
 
 builder.Services.AddCors(options =>
@@ -36,6 +65,9 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 
 app.UseCors("AllowReact");
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

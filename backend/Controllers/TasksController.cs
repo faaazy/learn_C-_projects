@@ -1,11 +1,13 @@
 namespace plzwork.Controllers;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using plzwork.Models.Dtos;
 using plzwork.Services;
 
 [ApiController]
 [Route("tasks")]
+[Authorize]
 public class TasksController(ITasksService tasksService) : ControllerBase
 {
     private readonly ITasksService _tasksService = tasksService;
