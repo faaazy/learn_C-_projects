@@ -61,4 +61,12 @@ public class TasksController(ITasksService tasksService) : ControllerBase
                 return BadRequest();
         };
     }
+
+    [HttpGet("admin")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<List<TodoDto>>> GetAllForAdmin()
+    {
+        var tasks = await _tasksService.GetTasksAsync();
+        return Ok(tasks);
+    }
 }

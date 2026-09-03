@@ -4,6 +4,13 @@ GET {{plzwork_HostAddress}}/tasks
 Accept: application/json
 Authorization: Bearer {{login.response.body.$.token}}
 
+
+### ADMIN GET ALL TASKS
+
+GET {{plzwork_HostAddress}}/tasks/admin
+Accept: application/json
+Authorization: Bearer {{login.response.body.$.token}}
+
 ### CREATE NEW TASK
 
 POST {{plzwork_HostAddress}}/tasks
