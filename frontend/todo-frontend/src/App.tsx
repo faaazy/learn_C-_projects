@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import { Login } from "./Login";
+import { apiFetch } from "./api/apiFetch";
 
 interface Todo {
   id: number;
@@ -13,14 +15,27 @@ const API_URL = "http://localhost:5085/tasks";
 function App() {
   const [tasks, setTasks] = useState<Todo[]>([]);
   const [name, setName] = useState("");
+  const [isLogged, setIsLogged] = useState(
+    localStorage.getItem("loginJWTToken") !== null,
+  );
 
   // first tasks
   useEffect(() => {
-    fetch(API_URL)
-      .then((res) => res.json())
-      .then((data) => setTasks(data));
+    const getTasks = async () => {
+      const res = await apiFetch(API_URL);
+
+      if (res.ok) {
+        const data = await res.json();
+        setTasks(data);
+      } else {
+        console.error(res.status);
+      }
+    };
+
+    getTasks();
   }, []);
 
+  // POST tasks
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
 
@@ -31,34 +46,50 @@ function App() {
       isCompleted: false,
     };
 
-    const response = await fetch(API_URL, {
+    const res = await apiFetch(API_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newTask),
     });
-    const createdTask = await response.json();
 
-    setTasks((prev) => [...prev, createdTask]);
-    setName("");
+    if (res.ok) {
+      const createdTask = await res.json();
+
+      setTasks((prev) => [...prev, createdTask]);
+      setName("");
+    } else {
+      console.error(res.statusText);
+    }
   };
+
+  function handleLogin() {
+    setIsLogged(true);
+  }
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="whats the new task..."
-        />
-        <button type="submit">Send</button>
-      </form>
-      <ul>
-        {tasks.map((task) => (
-          <li key={task.id}>
-            {task.name} - {task.isCompleted ? "completed" : "in progress!"}
-          </li>
-        ))}
-      </ul>
+      <button onClick={() => setIsLogged(!isLogged)}>Log in/Log out</button>
+
+      {!isLogged ? (
+        <Login setLoginHandler={handleLogin} />
+      ) : (
+        <>
+          <form onSubmit={handleSubmit}>
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="whats the new task..."
+            />
+            <button type="submit">Send</button>
+          </form>
+          <ul>
+            {tasks.map((task) => (
+              <li key={task.id}>
+                {task.name} - {task.isCompleted ? "completed" : "in progress!"}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   );
 }
