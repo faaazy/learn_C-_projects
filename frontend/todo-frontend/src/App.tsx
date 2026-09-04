@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { Login } from "./Login";
 import { apiFetch } from "./api/apiFetch";
+import { useAuth } from "./auth/AuthContext";
+import { useApiFetch } from "./api/useApiFetch";
 
 interface Todo {
   id: number;
@@ -15,12 +17,17 @@ const API_URL = "http://localhost:5085/tasks";
 function App() {
   const [tasks, setTasks] = useState<Todo[]>([]);
   const [name, setName] = useState("");
-  const [isLogged, setIsLogged] = useState(
-    localStorage.getItem("loginJWTToken") !== null,
-  );
+
+  const { isLogged } = useAuth();
+  const apiFetch = useApiFetch();
 
   // first tasks
   useEffect(() => {
+    if (!isLogged) {
+      setTasks([]);
+      return;
+    }
+
     const getTasks = async () => {
       const res = await apiFetch(API_URL);
 
@@ -33,7 +40,7 @@ function App() {
     };
 
     getTasks();
-  }, []);
+  }, [isLogged]);
 
   // POST tasks
   const handleSubmit = async (e: React.SubmitEvent) => {
@@ -61,16 +68,10 @@ function App() {
     }
   };
 
-  function handleLogin() {
-    setIsLogged(true);
-  }
-
   return (
     <div>
-      <button onClick={() => setIsLogged(!isLogged)}>Log in/Log out</button>
-
       {!isLogged ? (
-        <Login setLoginHandler={handleLogin} />
+        <Login />
       ) : (
         <>
           <form onSubmit={handleSubmit}>

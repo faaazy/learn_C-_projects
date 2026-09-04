@@ -1,12 +1,11 @@
 import React, { useState } from "react";
+import { useAuth } from "./auth/AuthContext";
 
-interface LoginProps {
-  setLoginHandler: () => void;
-}
-
-export function Login({ setLoginHandler }: LoginProps) {
+export function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const { login } = useAuth();
 
   const handleLogin = async (e: React.SubmitEvent) => {
     e.preventDefault();
@@ -23,7 +22,7 @@ export function Login({ setLoginHandler }: LoginProps) {
       const jwt = await res.json();
       localStorage.setItem("loginJWTToken", jwt.token);
 
-      setLoginHandler();
+      login();
     } else {
       alert(res.statusText);
     }
