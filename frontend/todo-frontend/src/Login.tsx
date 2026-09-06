@@ -29,28 +29,41 @@ export function Login() {
   };
 
   return (
-    <form onSubmit={(e) => handleLogin(e)}>
-      <label htmlFor="username">Username</label>
-      <input
-        type="text"
-        onChange={(e) => setUsername(e.target.value)}
-        value={username}
-        id="username"
-        name="username"
-        required
-      />
+    <div className="login-card">
+      <h1 className="login-title">Welcome</h1>
+      <form className="login-form" onSubmit={(e) => handleLogin(e)}>
+        <label className="login-label" htmlFor="username">
+          Username
+        </label>
+        <input
+          className="todo-input"
+          type="text"
+          onChange={(e) => setUsername(e.target.value)}
+          value={username}
+          id="username"
+          name="username"
+          placeholder="your username"
+          required
+        />
 
-      <label htmlFor="password">Password</label>
-      <input
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-        id="password"
-        name="password"
-        required
-      />
+        <label className="login-label" htmlFor="password">
+          Password
+        </label>
+        <input
+          className="todo-input"
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          id="password"
+          name="password"
+          placeholder="your password"
+          required
+        />
 
-      <button type="submit">Login</button>
-    </form>
+        <button className="btn btn-add" type="submit">
+          Login
+        </button>
+      </form>
+    </div>
   );
 }
