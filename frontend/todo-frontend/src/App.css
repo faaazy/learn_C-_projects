@@ -46,6 +46,28 @@
   margin-top: 8px;
 }
 
+.login-form p {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  margin: 4px 0 0;
+}
+
+.login-form p button {
+  background: none;
+  border: none;
+  color: #e52322;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 4px;
+}
+
+.login-form p button:hover {
+  color: #c71817;
+}
+
 .todo-title {
   font-size: 28px;
   font-weight: 700;
@@ -149,7 +171,9 @@
   border-radius: 12px;
   border: none;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
 }
 
 .btn-add,
@@ -187,4 +211,16 @@
 .btn-delete:hover {
   background: #fdecec;
   color: #c71817;
+}
+
+.btn-admin {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  color: #1a1a1a;
+  padding: 8px 16px;
+  margin-bottom: 10px;
+}
+
+.btn-admin:hover {
+  background: #f4f4f4;
 }

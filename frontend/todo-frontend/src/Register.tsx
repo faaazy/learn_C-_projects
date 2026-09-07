@@ -1,32 +1,29 @@
 import React, { useState } from "react";
-import { useAuth } from "./auth/AuthContext";
 
-interface LoginProps {
+interface RegisterProps {
   setShowRegister: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function Login({ setShowRegister }: LoginProps) {
+export function Register({ setShowRegister }: RegisterProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login } = useAuth();
-
-  const handleLogin = async (e: React.SubmitEvent) => {
+  const handleRegister = async (e: React.SubmitEvent) => {
     e.preventDefault();
 
     const userData = { username, password };
 
-    const res = await fetch("http://localhost:5085/auth/login", {
+    const res = await fetch("http://localhost:5085/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData),
     });
 
     if (res.ok) {
-      const jwt = await res.json();
-      localStorage.setItem("loginJWTToken", jwt.token);
+      const successfulMsg = await res.text();
+      alert(successfulMsg);
 
-      login();
+      setShowRegister(false);
     } else {
       alert(res.statusText);
     }
@@ -34,8 +31,8 @@ export function Login({ setShowRegister }: LoginProps) {
 
   return (
     <div className="login-card">
-      <h1 className="login-title">Login</h1>
-      <form className="login-form" onSubmit={(e) => handleLogin(e)}>
+      <h1 className="login-title">Welcome</h1>
+      <form className="login-form" onSubmit={(e) => handleRegister(e)}>
         <label className="login-label" htmlFor="username">
           Username
         </label>
@@ -65,12 +62,12 @@ export function Login({ setShowRegister }: LoginProps) {
         />
 
         <button className="btn btn-add" type="submit">
-          Login
+          Register
         </button>
 
         <p>
-          Dont have an account?
-          <button onClick={() => setShowRegister(true)}>Register</button>
+          Have an account?
+          <button onClick={() => setShowRegister(false)}>Login</button>
         </p>
       </form>
     </div>

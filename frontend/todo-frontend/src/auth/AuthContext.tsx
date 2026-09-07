@@ -4,11 +4,13 @@ import {
   useState,
   type PropsWithChildren,
 } from "react";
+import { decodeJwtToken } from "../utils/decodeJwtToken";
 
 interface AuthContextValue {
   isLogged: boolean;
   login: () => void;
   logout: () => void;
+  userRole: string | null;
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null);
@@ -17,6 +19,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [isLogged, setIsLogged] = useState(
     localStorage.getItem("loginJWTToken") !== null,
   );
+
+  const userClaims = isLogged
+    ? decodeJwtToken(localStorage.getItem("loginJWTToken"))
+    : null;
+
+  const userRole = userClaims?.role ?? null;
 
   const login = () => setIsLogged(true);
 
@@ -30,6 +38,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     isLogged,
     login,
     logout,
+    userRole,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

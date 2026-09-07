@@ -3,6 +3,7 @@ import "./App.css";
 import { Login } from "./Login";
 import { useAuth } from "./auth/AuthContext";
 import { useApiFetch } from "./api/useApiFetch";
+import { Register } from "./Register";
 
 interface Todo {
   id: number;
@@ -18,8 +19,9 @@ function App() {
   const [name, setName] = useState("");
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editingName, setEditingName] = useState("");
+  const [showRegister, setShowRegister] = useState(false);
 
-  const { isLogged } = useAuth();
+  const { isLogged, userRole } = useAuth();
   const apiFetch = useApiFetch();
 
   // first tasks
@@ -114,13 +116,33 @@ function App() {
     }
   };
 
+  const handleAdminBtn = async () => {
+    const res = await apiFetch(`${API_URL}/admin`);
+
+    if (res.ok) {
+      const tasks = await res.json();
+      console.log(tasks);
+    } else {
+      console.error(res.statusText);
+    }
+  };
+
   return (
     <div className="app">
       {!isLogged ? (
-        <Login />
+        showRegister ? (
+          <Register setShowRegister={setShowRegister} />
+        ) : (
+          <Login setShowRegister={setShowRegister} />
+        )
       ) : (
         <div className="todo-container">
           <h1 className="todo-title">My Tasks</h1>
+          {userRole === "Admin" && (
+            <button className="btn btn-admin" onClick={handleAdminBtn}>
+              Get admin tasks
+            </button>
+          )}
           <form className="todo-form" onSubmit={handleSubmit}>
             <input
               className="todo-input"
