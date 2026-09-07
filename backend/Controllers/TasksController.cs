@@ -1,5 +1,6 @@
 namespace plzwork.Controllers;
 
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using plzwork.Models.Dtos;
@@ -15,28 +16,44 @@ public class TasksController(ITasksService tasksService) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<TodoDto>>> GetAll()
     {
-        var tasks = await _tasksService.GetTasksAsync();
+        var userId = GetCurrentUserId();
+
+        if(userId is null) return Unauthorized();
+
+        var tasks = await _tasksService.GetTasksAsync(userId.Value);
         return Ok(tasks);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<TodoDto>> GetById(int id)
     {
-        var task = await _tasksService.GetTaskByIdAsync(id);
+        var userId = GetCurrentUserId();
+
+        if(userId is null) return Unauthorized();
+
+        var task = await _tasksService.GetTaskByIdAsync(id, userId.Value);
         return task is null ? NotFound() : Ok(task);
     }
 
     [HttpPost]
     public async Task<ActionResult<TodoDto>> Create(CreateTodoDto task)
     {
-        var createdTask = await _tasksService.AddTaskAsync(task);
+        var userId = GetCurrentUserId();
+
+        if(userId is null) return Unauthorized();
+
+        var createdTask = await _tasksService.AddTaskAsync(task, userId.Value);
         return Created($"/tasks/{createdTask.Id}", createdTask);
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var isDeleted = await _tasksService.DeleteTaskByIdAsync(id);
+        var userId = GetCurrentUserId();
+
+        if(userId is null) return Unauthorized();
+
+        var isDeleted = await _tasksService.DeleteTaskByIdAsync(id, userId.Value);
 
         return isDeleted ? NoContent() : NotFound();
     }
@@ -44,7 +61,11 @@ public class TasksController(ITasksService tasksService) : ControllerBase
     [HttpPut("{id}")]
     public async Task<ActionResult<TodoDto>> Update(int id, UpdateTodoDto taskDto)
     {
-        var task = await _tasksService.UpdateTaskAsync(id, taskDto);
+        var userId = GetCurrentUserId();
+
+        if(userId is null) return Unauthorized();
+
+        var task = await _tasksService.UpdateTaskAsync(id, taskDto, userId.Value);
 
         switch (task.Status)
         {
@@ -66,7 +87,14 @@ public class TasksController(ITasksService tasksService) : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<List<TodoDto>>> GetAllForAdmin()
     {
-        var tasks = await _tasksService.GetTasksAsync();
+        var tasks = await _tasksService.GetAllTasksAsync();
         return Ok(tasks);
+    }
+
+    private int? GetCurrentUserId()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier);
+
+        return int.Parse(userId.Value);
     }
 }

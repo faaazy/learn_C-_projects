@@ -4,13 +4,15 @@ using plzwork.Models.Dtos;
 
 public interface ITasksService
 {
-    Task<List<TodoDto>> GetTasksAsync();
+    Task<List<TodoDto>> GetTasksAsync(int userId);
 
-    Task<TodoDto> AddTaskAsync(CreateTodoDto task);
+    Task<List<TodoDto>> GetAllTasksAsync();
 
-    Task<TodoDto?> GetTaskByIdAsync(int id);
+    Task<TodoDto> AddTaskAsync(CreateTodoDto task, int userId);
 
-    Task<bool> DeleteTaskByIdAsync(int id);
+    Task<TodoDto?> GetTaskByIdAsync(int id, int userId);
 
-    Task<UpdateTaskResult> UpdateTaskAsync(int id, UpdateTodoDto taskDto);
+    Task<bool> DeleteTaskByIdAsync(int id, int userId);
+
+    Task<UpdateTaskResult> UpdateTaskAsync(int id, UpdateTodoDto taskDto, int userId);
 };

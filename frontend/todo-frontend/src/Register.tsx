@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { apiFetch } from "./api/apiFetch";
 
 interface RegisterProps {
   setShowRegister: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,9 +14,8 @@ export function Register({ setShowRegister }: RegisterProps) {
 
     const userData = { username, password };
 
-    const res = await fetch("http://localhost:5085/auth/register", {
+    const res = await apiFetch("http://localhost:5085/auth/register", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData),
     });
 

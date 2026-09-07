@@ -4,7 +4,12 @@ import { apiFetch } from "./apiFetch";
 export const useApiFetch = () => {
   const { logout } = useAuth();
 
-  return (link: string, options: RequestInit = {}) => {
-    return apiFetch(link, options, logout);
+  return async (link: string, options: RequestInit = {}) => {
+    const res = await apiFetch(link, options);
+
+    if (res.status === 401) {
+      logout();
+    }
+    return res;
   };
 };

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "./auth/AuthContext";
+import { apiFetch } from "./api/apiFetch";
 
 interface LoginProps {
   setShowRegister: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,9 +17,8 @@ export function Login({ setShowRegister }: LoginProps) {
 
     const userData = { username, password };
 
-    const res = await fetch("http://localhost:5085/auth/login", {
+    const res = await apiFetch("http://localhost:5085/auth/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData),
     });
 
@@ -28,7 +28,7 @@ export function Login({ setShowRegister }: LoginProps) {
 
       login();
     } else {
-      alert(res.statusText);
+      res.status === 401 ? alert("Invalid credentials") : alert(res.statusText);
     }
   };
 

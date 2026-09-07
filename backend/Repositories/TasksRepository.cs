@@ -6,11 +6,19 @@ using plzwork.Models;
 
 public class TasksRepository(AppDbContext context) : ITasksRepository
 {
-    public async Task<List<Todo>> GetTasksAsync()
+    public async Task<List<Todo>> GetTasksAsync(int userId)
     {
         return await context.Todos
-        .AsNoTracking()
-        .ToListAsync();
+            .Where(todo => todo.UserId == userId)
+            .AsNoTracking()
+            .ToListAsync();
+    }
+
+    public async Task<List<Todo>> GetAllTasksAsync()
+    {
+        return await context.Todos
+            .AsNoTracking()
+            .ToListAsync();
     }
 
     public async Task<Todo> AddTaskAsync(Todo task)
@@ -20,14 +28,16 @@ public class TasksRepository(AppDbContext context) : ITasksRepository
         return task;
     }
 
-    public async Task<Todo?> GetTaskByIdAsync(int id)
+    public async Task<Todo?> GetTaskByIdAsync(int id, int userId)
     {
-        return await context.Todos.SingleOrDefaultAsync(task => task.Id == id);
+        return await context.Todos
+            .SingleOrDefaultAsync(task => task.Id == id && task.UserId == userId);
     }
 
-    public async Task<bool> DeleteTaskByIdAsync(int id)
+    public async Task<bool> DeleteTaskByIdAsync(int id, int userId)
     {
-        var taskById = await context.Todos.SingleOrDefaultAsync(task => task.Id == id);
+        var taskById = await context.Todos
+            .SingleOrDefaultAsync(task => task.Id == id && task.UserId == userId);
         
         if(taskById is not null)
         {

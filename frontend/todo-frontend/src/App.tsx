@@ -21,7 +21,7 @@ function App() {
   const [editingName, setEditingName] = useState("");
   const [showRegister, setShowRegister] = useState(false);
 
-  const { isLogged, userRole } = useAuth();
+  const { isLogged, userRole, logout } = useAuth();
   const apiFetch = useApiFetch();
 
   // first tasks
@@ -138,6 +138,9 @@ function App() {
       ) : (
         <div className="todo-container">
           <h1 className="todo-title">My Tasks</h1>
+          <button className="btn btn-logout" onClick={logout}>
+            Log out
+          </button>
           {userRole === "Admin" && (
             <button className="btn btn-admin" onClick={handleAdminBtn}>
               Get admin tasks

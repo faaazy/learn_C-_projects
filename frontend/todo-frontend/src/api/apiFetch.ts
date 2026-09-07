@@ -1,7 +1,6 @@
 export async function apiFetch(
   link: string,
   options: RequestInit = {},
-  logout?: () => void,
 ): Promise<Response> {
   const jwtToken = localStorage.getItem("loginJWTToken");
 
@@ -19,10 +18,6 @@ export async function apiFetch(
     ...options,
     headers,
   });
-
-  if (res.status === 401) {
-    logout?.();
-  }
 
   return res;
 }

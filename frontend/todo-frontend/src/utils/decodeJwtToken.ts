@@ -5,7 +5,7 @@ export function decodeJwtToken(token: string | null) {
 
   const decodedToken = JSON.parse(atob(tokenPayload));
 
-  const jwtObject = { id: null, username: null, role: null };
+  const jwtObject = { id: null, username: null, role: null, exp: null };
 
   for (const key in decodedToken) {
     const lastKeyPart = key.split("/").at(-1);
@@ -19,6 +19,9 @@ export function decodeJwtToken(token: string | null) {
         break;
       case "role":
         jwtObject.role = decodedToken[key];
+        break;
+      case "exp":
+        jwtObject.exp = decodedToken[key];
         break;
 
       default:

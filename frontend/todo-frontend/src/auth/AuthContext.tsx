@@ -13,12 +13,27 @@ interface AuthContextValue {
   userRole: string | null;
 }
 
+function getInitialAuthState() {
+  const jwtToken = localStorage.getItem("loginJWTToken");
+
+  if (!jwtToken) return false;
+
+  const decodedJwt = decodeJwtToken(jwtToken);
+
+  if (!decodedJwt) return false;
+
+  if (decodedJwt.exp === null || decodedJwt.exp < Date.now() / 1000) {
+    localStorage.removeItem("loginJWTToken");
+    return false;
+  }
+
+  return true;
+}
+
 export const AuthContext = createContext<AuthContextValue | null>(null);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const [isLogged, setIsLogged] = useState(
-    localStorage.getItem("loginJWTToken") !== null,
-  );
+  const [isLogged, setIsLogged] = useState(getInitialAuthState);
 
   const userClaims = isLogged
     ? decodeJwtToken(localStorage.getItem("loginJWTToken"))

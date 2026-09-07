@@ -10,6 +10,7 @@
 .todo-container {
   width: 100%;
   max-width: 640px;
+  position: relative;
 }
 
 .login-card {
@@ -73,6 +74,7 @@
   font-weight: 700;
   color: #1a1a1a;
   margin: 0 0 24px;
+  text-align: center;
 }
 
 .todo-form {
@@ -191,7 +193,8 @@
 
 .btn-edit,
 .btn-delete,
-.btn-cancel {
+.btn-cancel,
+.btn-logout {
   background: #fff;
   border: 1px solid #e0e0e0;
   color: #1a1a1a;
@@ -200,8 +203,15 @@
 
 .btn-edit:hover,
 .btn-delete:hover,
-.btn-cancel:hover {
+.btn-cancel:hover,
+.btn-logout:hover {
   background: #f4f4f4;
+}
+
+.btn-logout {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .btn-delete {
