@@ -1,8 +1,8 @@
-namespace plzwork.Repositories;
+namespace DotnetTodoApp.Repositories;
 
 using Microsoft.EntityFrameworkCore;
-using plzwork.Data;
-using plzwork.Models;
+using DotnetTodoApp.Data;
+using DotnetTodoApp.Models;
 
 public class TasksRepository(AppDbContext context) : ITasksRepository
 {

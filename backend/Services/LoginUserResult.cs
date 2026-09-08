@@ -1,4 +1,4 @@
-namespace plzwork.Services;
+namespace DotnetTodoApp.Services;
 
 public record LoginUserResult(
     LoginUserStatus Status,

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace plzwork.Migrations
+namespace DotnetTodoApp.Migrations
 {
     /// <inheritdoc />
     public partial class MakeUsernameUnique : Migration

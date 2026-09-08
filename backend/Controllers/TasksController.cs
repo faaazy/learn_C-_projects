@@ -1,10 +1,10 @@
-namespace plzwork.Controllers;
+namespace DotnetTodoApp.Controllers;
 
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using plzwork.Models.Dtos;
-using plzwork.Services;
+using DotnetTodoApp.Models.Dtos;
+using DotnetTodoApp.Services;
 
 [ApiController]
 [Route("tasks")]

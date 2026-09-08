@@ -1,6 +1,6 @@
-namespace plzwork.Repositories;
+namespace DotnetTodoApp.Repositories;
 
-using plzwork.Models;
+using DotnetTodoApp.Models;
 
 public interface ITasksRepository
 {

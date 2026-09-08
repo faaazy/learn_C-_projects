@@ -1,6 +1,6 @@
-namespace plzwork.Services;
+namespace DotnetTodoApp.Services;
 
-using plzwork.Models.Dtos;
+using DotnetTodoApp.Models.Dtos;
 
 public interface IAuthService
 {

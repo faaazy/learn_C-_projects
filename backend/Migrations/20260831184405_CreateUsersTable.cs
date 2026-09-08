@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace plzwork.Migrations
+namespace DotnetTodoApp.Migrations
 {
     /// <inheritdoc />
     public partial class CreateUsersTable : Migration

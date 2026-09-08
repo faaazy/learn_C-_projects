@@ -2,9 +2,9 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using plzwork.Data;
-using plzwork.Repositories;
-using plzwork.Services;
+using DotnetTodoApp.Data;
+using DotnetTodoApp.Repositories;
+using DotnetTodoApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,12 +1,12 @@
 using System.Security.Claims;
-using plzwork.Models;
-using plzwork.Models.Dtos;
-using plzwork.Repositories;
+using DotnetTodoApp.Models;
+using DotnetTodoApp.Models.Dtos;
+using DotnetTodoApp.Repositories;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace plzwork.Services;
+namespace DotnetTodoApp.Services;
 
 public class AuthService(IUsersRepository usersRepository, IConfiguration configuration) : IAuthService
 {

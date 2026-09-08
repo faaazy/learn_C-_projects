@@ -1,4 +1,4 @@
-namespace plzwork.Models;
+namespace DotnetTodoApp.Models;
 
 public enum UserRole
 {

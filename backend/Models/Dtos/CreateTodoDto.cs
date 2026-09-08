@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace plzwork.Models.Dtos;
+namespace DotnetTodoApp.Models.Dtos;
 
 public record CreateTodoDto(
     [Required]

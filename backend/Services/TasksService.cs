@@ -1,8 +1,8 @@
-namespace plzwork.Services;
+namespace DotnetTodoApp.Services;
 
-using plzwork.Models;
-using plzwork.Models.Dtos;
-using plzwork.Repositories;
+using DotnetTodoApp.Models;
+using DotnetTodoApp.Models.Dtos;
+using DotnetTodoApp.Repositories;
 
 public class TasksService(ITasksRepository repository) : ITasksService
 {

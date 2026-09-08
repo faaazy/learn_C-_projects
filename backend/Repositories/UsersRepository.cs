@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using plzwork.Data;
-using plzwork.Models;
+using DotnetTodoApp.Data;
+using DotnetTodoApp.Models;
 
-namespace plzwork.Repositories;
+namespace DotnetTodoApp.Repositories;
 
 public class UsersRepository(AppDbContext context) : IUsersRepository
 {

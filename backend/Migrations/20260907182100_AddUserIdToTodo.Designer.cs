@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using plzwork.Data;
+using DotnetTodoApp.Data;
 
 #nullable disable
 
-namespace plzwork.Migrations
+namespace DotnetTodoApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20260907182100_AddUserIdToTodo")]
@@ -25,7 +25,7 @@ namespace plzwork.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("plzwork.Models.Todo", b =>
+            modelBuilder.Entity("DotnetTodoApp.Models.Todo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,7 +53,7 @@ namespace plzwork.Migrations
                     b.ToTable("Todos");
                 });
 
-            modelBuilder.Entity("plzwork.Models.User", b =>
+            modelBuilder.Entity("DotnetTodoApp.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,9 +80,9 @@ namespace plzwork.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("plzwork.Models.Todo", b =>
+            modelBuilder.Entity("DotnetTodoApp.Models.Todo", b =>
                 {
-                    b.HasOne("plzwork.Models.User", "User")
+                    b.HasOne("DotnetTodoApp.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using plzwork.Models.Dtos;
-using plzwork.Services;
+using DotnetTodoApp.Models.Dtos;
+using DotnetTodoApp.Services;
 
-namespace plzwork.Controllers;
+namespace DotnetTodoApp.Controllers;
 
 [ApiController]
 [Route("auth")]

@@ -1,6 +1,6 @@
-using plzwork.Models.Dtos;
+using DotnetTodoApp.Models.Dtos;
 
-namespace plzwork.Services;
+namespace DotnetTodoApp.Services;
 
 
 public record UpdateTaskResult(

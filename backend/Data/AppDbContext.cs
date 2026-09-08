@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using plzwork.Models;
+using DotnetTodoApp.Models;
 
-namespace plzwork.Data;
+namespace DotnetTodoApp.Data;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {

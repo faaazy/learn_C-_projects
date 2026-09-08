@@ -1,6 +1,6 @@
-using plzwork.Models;
+using DotnetTodoApp.Models;
 
-namespace plzwork.Repositories;
+namespace DotnetTodoApp.Repositories;
 
 public interface IUsersRepository
 {
