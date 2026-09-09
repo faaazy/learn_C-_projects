@@ -67,21 +67,21 @@ public class TasksController(ITasksService tasksService) : ControllerBase
 
         var task = await _tasksService.UpdateTaskAsync(id, taskDto, userId.Value);
 
-        switch (task.Status)
-        {
-            case UpdateTaskStatus.Success: 
-                return Ok(task.Todo);
-            
-            case UpdateTaskStatus.AlreadyCompleted:
-                return Conflict("This task is already completed");
-
-            case UpdateTaskStatus.NotFound:
-                return NotFound();
-
-            default: 
-                return BadRequest();
-        };
+        return task is null ? NotFound() : Ok(task) ;
     }
+
+    [HttpPatch("{id}/status")]
+    public async Task<ActionResult<TodoDto>> UpdateStatus(int id, UpdateTodoStatusDto updateTodoStatus)
+    {
+        var userId = GetCurrentUserId();
+
+        if(userId is null) return Unauthorized();
+
+        var task = await _tasksService.UpdateTodoStatusAsync(id, updateTodoStatus.IsCompleted, userId.Value);
+
+        return task is null ? NotFound() : Ok(task) ;
+    }
+
 
     [HttpGet("admin")]
     [Authorize(Roles = "Admin")]

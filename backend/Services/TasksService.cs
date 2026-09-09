@@ -25,7 +25,7 @@ public class TasksService(ITasksRepository repository) : ITasksService
         var task = new Todo{
             UserId = userId,
             Name = taskDto.Name, 
-            DueDate = taskDto.DueDate.Value, 
+            DueDate = taskDto.DueDate, 
             IsCompleted = false
         };
 
@@ -47,23 +47,31 @@ public class TasksService(ITasksRepository repository) : ITasksService
         return isDeleted;
     }
 
-    public async Task<UpdateTaskResult> UpdateTaskAsync(int id, UpdateTodoDto taskDto, int userId)
+    public async Task<TodoDto?> UpdateTaskAsync(int id, UpdateTodoDto taskDto, int userId)
     {
         var task = await repository.GetTaskByIdAsync(id, userId);
 
-        if (task is null) 
-        return new UpdateTaskResult(UpdateTaskStatus.NotFound, null);
-
-        if (task.IsCompleted) 
-        return new UpdateTaskResult(UpdateTaskStatus.AlreadyCompleted, null);
+        if (task is null) return null;
 
         task.Name = taskDto.Name;
-        task.DueDate = taskDto.DueDate.Value;
-        task.IsCompleted = taskDto.IsCompleted;
+        task.DueDate = taskDto.DueDate;
 
         await repository.SaveChangesAsync();
 
-        return new UpdateTaskResult(UpdateTaskStatus.Success, ToDto(task));
+        return ToDto(task);
+    }
+
+    public async Task<TodoDto?> UpdateTodoStatusAsync(int id, bool isCompleted, int userId)
+    {
+        var task = await repository.GetTaskByIdAsync(id, userId);
+
+        if(task is null) return null;
+
+        task.IsCompleted = isCompleted;
+
+        await repository.SaveChangesAsync();
+
+        return ToDto(task);
     }
 
     private static TodoDto ToDto(Todo task) => 

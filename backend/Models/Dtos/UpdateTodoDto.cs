@@ -7,8 +7,5 @@ public record UpdateTodoDto(
     [StringLength(100, MinimumLength = 3)]
     string Name, 
 
-    [Required]
-    DateTime? DueDate,
-    
-    bool IsCompleted
+    DateOnly? DueDate    
 );

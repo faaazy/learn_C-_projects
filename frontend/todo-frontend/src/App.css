@@ -80,7 +80,7 @@
 .todo-form {
   display: flex;
   gap: 10px;
-  margin-bottom: 28px;
+  margin-bottom: 33px;
 }
 
 .todo-input {
@@ -233,4 +233,114 @@
 
 .btn-admin:hover {
   background: #f4f4f4;
+}
+
+.todo-checkbox-label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.todo-checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.todo-checkbox-custom {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #d0d0d0;
+  border-radius: 6px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+
+.todo-checkbox:checked + .todo-checkbox-custom {
+  background: #e52322;
+  border-color: #e52322;
+}
+
+.todo-checkbox:checked + .todo-checkbox-custom::after {
+  content: "";
+  width: 6px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translateY(-1px);
+}
+
+.todo-checkbox:focus-visible + .todo-checkbox-custom {
+  outline: 2px solid #e52322;
+  outline-offset: 2px;
+}
+
+.todo-date {
+  font-size: 13px;
+  color: #888;
+  white-space: nowrap;
+}
+
+.todo-date-input {
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  color: #1a1a1a;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s;
+  font-family: inherit;
+  cursor: pointer;
+  min-width: 140px;
+}
+
+.todo-date-input:hover {
+  border-color: #ccc;
+}
+
+.todo-date-input:focus {
+  border-color: #e52322;
+}
+
+.todo-date-input::-webkit-calendar-picker-indicator {
+  opacity: 0.6;
+  cursor: pointer;
+  transform: scale(1.3);
+  margin-right: -4px;
+}
+
+.todo-date-input::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+.completed-section {
+  margin-top: 32px;
+}
+
+.completed-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #999;
+  margin: 0 0 12px 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.todo-item-done {
+  opacity: 0.65;
+  background: #fafafa;
+}
+
+.todo-name-done {
+  text-decoration: line-through;
+  color: #999;
 }

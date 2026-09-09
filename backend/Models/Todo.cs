@@ -9,7 +9,7 @@ public class Todo
 
     public required string Name {get; set;}
 
-    public DateTime DueDate {get; set;}
+    public DateOnly? DueDate {get; set;}
 
     public bool IsCompleted {get; set;}
 }

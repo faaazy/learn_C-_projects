@@ -14,5 +14,7 @@ public interface ITasksService
 
     Task<bool> DeleteTaskByIdAsync(int id, int userId);
 
-    Task<UpdateTaskResult> UpdateTaskAsync(int id, UpdateTodoDto taskDto, int userId);
+    Task<TodoDto?> UpdateTaskAsync(int id, UpdateTodoDto taskDto, int userId);
+
+    Task<TodoDto?> UpdateTodoStatusAsync(int id, bool isCompleted, int userId);
 };
